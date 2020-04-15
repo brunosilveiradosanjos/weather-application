@@ -12,9 +12,6 @@ const port = process.env.PORT || 3000
 const MapBoxKey = process.env.MAPBOXKEY
 const OpenWeatherKey = process.env.OPENWEATHERKEY
 
-console.log(MapBoxKey)
-console.log(OpenWeatherKey)
-
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
