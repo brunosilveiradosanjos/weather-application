@@ -3,10 +3,17 @@ const express = require('express')
 const hbs = require('hbs')
 const geocode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
-const key = require('../../../my_key')
+// const key = require('../../../my_key')
+const dotenv = require('dotenv');
+dotenv.config();
 
 const app = express()
 const port = process.env.PORT || 3000
+const MapBoxKey = process.env.MAPBOXKEY
+const OpenWeatherKey = process.env.OPENWEATHERKEY
+
+console.log(MapBoxKey)
+console.log(OpenWeatherKey)
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -50,11 +57,11 @@ app.get('/weather', (req, res) => {
             error: 'Address needs to be provided!'
         })
     }
-    geocode(req.query.address, key.MapBoxKey, (error, { lat, lon, location } = {}) => {
+    geocode(req.query.address, MapBoxKey, (error, { lat, lon, location } = {}) => {
         if (error) {
             return res.send({ error })
         }
-        forecast(lat, lon, key.OpenWeatherKey, (error, forecastData) => {
+        forecast(lat, lon, OpenWeatherKey, (error, forecastData) => {
             if (error) {
                 return res.send({ error })
             }
