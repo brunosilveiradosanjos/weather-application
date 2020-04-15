@@ -2,6 +2,7 @@ const request = require('request')
 
 const forecast = (lat, lon, openWeatherKey, callback) => {
     let url = 'https://api.openweathermap.org/data/2.5/weather?units=metric&lat=' + lat + '&lon=' + lon + '&appid=' + openWeatherKey + ''
+    // console.log(url)
     request({ url: url, json: true }, (error, { body }) => {
         if (error) {
         } else if (body.cod !== 200) {
@@ -9,7 +10,13 @@ const forecast = (lat, lon, openWeatherKey, callback) => {
             callback(body.message, undefined)
         } else {
             callback(undefined,
-                'It\'s currently ' + body.main.temp + ' C degrees out, ' + body.weather[0].description + '. The wind is ' + body.wind.speed + ' m/s.'
+                {
+                    temp: Math.round(body.main.temp),
+                    weather: body.weather[0].description,
+                    wind: body.wind.speed,
+                    humidity: body.main.humidity
+                }
+                // 'It\'s currently ' + Math.round(body.main.temp) + ' C degrees out, \n ' + body.weather[0].description + '. The wind is ' + body.wind.speed + ' m/s.'
                 /*    {
                    temp: response.body.main.temp,
                    weather: response.body.weather[0].description,

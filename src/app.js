@@ -58,12 +58,15 @@ app.get('/weather', (req, res) => {
         if (error) {
             return res.send({ error })
         }
-        forecast(lat, lon, OpenWeatherKey, (error, forecastData) => {
+        forecast(lat, lon, OpenWeatherKey, (error, { temp, weather, wind, humidity }) => {
             if (error) {
                 return res.send({ error })
             }
             res.send({
-                forecast: forecastData,
+                temp,
+                weather,
+                wind,
+                humidity,
                 location,
                 address: req.query.address
             })
